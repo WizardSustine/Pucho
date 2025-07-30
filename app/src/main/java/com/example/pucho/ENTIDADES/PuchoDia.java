@@ -7,8 +7,10 @@ import com.example.pucho.SQLite.Contrato;
 public class PuchoDia {
     private String fecha, estado;
     private int cantidad, expectativa;
+    private long _id;
 
-    public PuchoDia(String fecha, String estado, int cantidad, int expectativa) {
+    public PuchoDia(long _id, String fecha, String estado, int cantidad, int expectativa) {
+        this._id = _id;
         this.fecha = fecha;
         this.estado = estado;
         this.cantidad = cantidad;
@@ -23,6 +25,14 @@ public class PuchoDia {
         values.put(Contrato.ENTRADAS.COLUMNA_ESTADO, estado);
 
         return values;
+    }
+
+    public long get_id() {
+        return _id;
+    }
+
+    public void set_id(long _id) {
+        this._id = _id;
     }
 
     public String getFecha() {

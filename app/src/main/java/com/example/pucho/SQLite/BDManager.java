@@ -65,12 +65,20 @@ public class BDManager {
 
     public Cursor fetch_expectativas(){
         String[] columns = new String[]{
-                Contrato.EXPECTATIVAS._ID, Contrato.EXPECTATIVAS.COLUMNA_INICIO, Contrato.EXPECTATIVAS.COLUMNA_DIAS, Contrato.EXPECTATIVAS.COLUMNA_CANTIDAD
+                Contrato.EXPECTATIVAS._ID, Contrato.EXPECTATIVAS.COLUMNA_INICIO, Contrato.EXPECTATIVAS.COLUMNA_CANTIDAD, Contrato.EXPECTATIVAS.COLUMNA_DIAS, Contrato.EXPECTATIVAS.COLUMNA_ESTADO
         };
         Cursor cursor = sqLiteDatabase.query(Contrato.EXPECTATIVAS.NOMBRE_TABLA, columns, null, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
         }
+        return cursor;
+    }
+
+    public Cursor fetch_last_expectativa(){
+        String[] columns = new String[]{
+                Contrato.EXPECTATIVAS._ID, Contrato.EXPECTATIVAS.COLUMNA_INICIO, Contrato.EXPECTATIVAS.COLUMNA_CANTIDAD, Contrato.EXPECTATIVAS.COLUMNA_DIAS, Contrato.EXPECTATIVAS.COLUMNA_ESTADO
+        };
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + Contrato.EXPECTATIVAS.NOMBRE_TABLA + " WHERE " + Contrato.EXPECTATIVAS._ID + " = (SELECT MAX(" + Contrato.EXPECTATIVAS._ID +") FROM " + Contrato.EXPECTATIVAS.NOMBRE_TABLA + ")", null);
         return cursor;
     }
 }

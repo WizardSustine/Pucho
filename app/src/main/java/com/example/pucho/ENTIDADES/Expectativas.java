@@ -5,37 +5,44 @@ import android.content.ContentValues;
 import com.example.pucho.SQLite.Contrato;
 
 public class Expectativas {
-    private int dias, cantidad;
-    private String inicio;
+    private int diasRestantes, cantidad;
+    private String fechaInicio, estado;
 
-    public Expectativas(String inicio){
-        this.inicio = inicio;
-        dias = 31;
-        cantidad = 0;
+    public Expectativas(String fecha){
+        this.fechaInicio = fecha;
     }
 
     public ContentValues toContentValues(){
         ContentValues values = new ContentValues();
-        values.put(Contrato.EXPECTATIVAS.COLUMNA_INICIO, inicio);
-        values.put(Contrato.EXPECTATIVAS.COLUMNA_DIAS, dias);
+        values.put(Contrato.EXPECTATIVAS.COLUMNA_INICIO, fechaInicio);
         values.put(Contrato.EXPECTATIVAS.COLUMNA_CANTIDAD, cantidad);
+        values.put(Contrato.EXPECTATIVAS.COLUMNA_DIAS, diasRestantes);
+        values.put(Contrato.EXPECTATIVAS.COLUMNA_ESTADO, estado);
         return values;
     }
 
-    public String getInicio() {
-        return inicio;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setInicio(String inicio) {
-        this.inicio = inicio;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
-    public int getDias() {
-        return dias;
+    public int getDiasRestantes() {
+        return diasRestantes;
     }
 
-    public void setDias(int dias) {
-        this.dias = dias;
+    public void setDiasRestantes(int diasRestantes) {
+        this.diasRestantes = diasRestantes;
+    }
+
+    public String getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(String fechaInicio) {
+        this.fechaInicio = fechaInicio;
     }
 
     public int getCantidad() {
