@@ -1,10 +1,17 @@
 # <ins>PUCHO</ins>
 
-  An App to count **how many cigarettes we smoke daily** but also **setting monthly goals** to help us strengthen our awareness of our habits and to help us _reduce our daily consumption._
-> It shows you my thought process and documentation for creating apps. It'll get better.\
-> <sub>This app was build by using [Android Studio](https://developer.android.com/)</sub>
+  An App to count **how many cigarettes we smoke daily** 🚬 but also **setting monthly goals** 🏆 to help us strengthen our awareness of our habits and to help us _reduce our daily consumption._ 
+> It shows you my thought process and documentation for creating apps. It'll get better.👍\
+> **Technicals:** 💻
+> - <sup>**DBMS:** SQLite</sup>
+> - <sup>**IDE:** Android Studio</sup>
+> - <sup>**Languaje:** JAVA</sup>
+> - <sup>**SDK:** 35</sup>
+> - <sup>**Build tool:** Gradle</sup>***
+>
 ## IN-DEPTH
-  To fulfill the purpose of this app i wanted that follows this requirements:
+To fulfill the purpose of this app i wanted that follows this requirements:\
+FUNCTIONAL REQUIREMENTS:
 1. Have a daily counter of smokes;
 2. Have a button for adding smokes;
 3. Have an amount of smokes established as a monthly goal;
@@ -14,7 +21,10 @@
 7. Being able to change the goal;
 8. Being able to count without a goal;
 9. Being able to see a graphs of my daily progress;
-10. Being able to see a list of my goals;
+10. Being able to see a list of my goals.<br/>
+
+NON-FUNCTIONAL REQUIREMENTS:<br/>
+1. System must allow user to 
 ### USE CASES
   1 - SET DAILY COUNT WITHOUT A GOAL:
    - **Primary actor:** User;
@@ -62,6 +72,6 @@
      - System records progress;
      - System checks for date changes and sets a the count for each new day, and rest a day for the goal amount of days;
    - **Alternate path:**
-     - User access the app and select the option to set a goal;
-     - System presents the user with a form to complete the amount of time, and the amount of daily consumption;
-     - User start counting his consumption;
+     - User access ;
+    
+  ### BUSINESS RULES
