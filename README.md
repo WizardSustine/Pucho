@@ -7,7 +7,7 @@
 > - <sup>**IDE:** Android Studio</sup>
 > - <sup>**Languaje:** JAVA</sup>
 > - <sup>**SDK:** 35</sup>
-> - <sup>**Build tool:** Gradle</sup>***
+> - <sup>**Build tool:** Gradle</sup>
 >
 ## IN-DEPTH
 To fulfill the purpose of this app i wanted that follows this requirements:\
@@ -24,7 +24,8 @@ FUNCTIONAL REQUIREMENTS:
 10. Being able to see a list of my goals.<br/>
 
 NON-FUNCTIONAL REQUIREMENTS:<br/>
-1. System must allow user to 
+1. System must allow user to easily count daily smokes;
+2. System must have options for 30/60/90 days to avoid unnecessary thoughts when goals are being set.
 ### USE CASES
   1 - SET DAILY COUNT WITHOUT A GOAL:
    - **Primary actor:** User;
@@ -72,6 +73,26 @@ NON-FUNCTIONAL REQUIREMENTS:<br/>
      - System records progress;
      - System checks for date changes and sets a the count for each new day, and rest a day for the goal amount of days;
    - **Alternate path:**
-     - User access ;
+     - User access the app and select the option to set a goal;
+     - System presents the user with a form to complete the amount of days for this goal, and the amount of daily consumption to achieve;
+     - User set amount of consumption and amount of days to this goal and select option to save it;
+     - System saves the goal and waits for the initial smoke to be add;
+     - User select option to add first smokes on a different day;
+     - System calculates and saves how often has to smoke from the current time until midnight to achieve the giving goal;
+     - System set a 'it's abled to smoke´ sign and a notifications for adding the next smoke when the given time has passed;
+     - 
     
-  ### BUSINESS RULES
+  ### REQUIREMENTS ANALYSIS
+  It will be necessary to store:
+- Count of smokes related to a day;
+- Count to achive related to a day;
+- State of the current goal related to a day;
+- Time to each smoke in case a goal has been set;
+- Date related to the start of a goal;
+- Count of smokes to achive related to a goal;
+- Days until complete the goal;
+- State of the goal;
+
+ERD - ENTITY RELATIONSHIP DIAGRAM<br/>
+<img width="774" height="392" alt="image" src="https://github.com/user-attachments/assets/8cf9643e-9cd0-47a4-8b7b-4537b4d77e33" />
+
