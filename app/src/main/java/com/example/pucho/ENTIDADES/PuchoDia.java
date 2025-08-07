@@ -6,25 +6,35 @@ import com.example.pucho.SQLite.Contrato;
 
 public class PuchoDia {
     private String fecha, estado;
-    private int cantidad, expectativa;
+    private int consumo, expectativa, time_foreach;
     private long _id;
 
-    public PuchoDia(long _id, String fecha, String estado, int cantidad, int expectativa) {
-        this._id = _id;
+    public PuchoDia(String fecha) {
+        this._id = 0;
         this.fecha = fecha;
-        this.estado = estado;
-        this.cantidad = cantidad;
-        this.expectativa = expectativa;
+        this.estado = "PENDIENTE";
+        this.consumo = 0;
+        this.expectativa = 0;
+        this.time_foreach = 0;
     }
 
     public ContentValues toContentValues(){
         ContentValues values = new ContentValues();
         values.put(Contrato.ENTRADAS.COLUMNA_FECHA, fecha);
-        values.put(Contrato.ENTRADAS.COLUMNA_CANTIDAD, cantidad);
+        values.put(Contrato.ENTRADAS.COLUMNA_CANTIDAD, consumo);
         values.put(Contrato.ENTRADAS.COLUMNA_EXPECTATIVA, expectativa);
+        values.put(Contrato.ENTRADAS.COLUMNA_TIME_FOREACH, time_foreach);
         values.put(Contrato.ENTRADAS.COLUMNA_ESTADO, estado);
 
         return values;
+    }
+
+    public int getTime_foreach() {
+        return time_foreach;
+    }
+
+    public void setTime_foreach(int time_foreach) {
+        this.time_foreach = time_foreach;
     }
 
     public long get_id() {
@@ -51,12 +61,12 @@ public class PuchoDia {
         this.estado = estado;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public int getConsumo() {
+        return consumo;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setConsumo(int consumo) {
+        this.consumo = consumo;
     }
 
     public int getExpectativa() {

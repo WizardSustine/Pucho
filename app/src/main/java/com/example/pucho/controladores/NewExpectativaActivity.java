@@ -13,7 +13,7 @@ import com.example.pucho.MainActivity;
 import com.example.pucho.R;
 import com.example.pucho.SQLite.BDManager;
 
-public class ControladorExpectativa extends Activity {
+public class NewExpectativaActivity extends Activity {
     private EditText cantidadPuchos, cantidadDias, fechaInicio;
     private String fecha;
     private ImageButton addPuchos, deletePuchos, addDias, deleteDias;

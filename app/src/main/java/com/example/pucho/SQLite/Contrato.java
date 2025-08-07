@@ -9,6 +9,7 @@ public class Contrato {
         public static final String COLUMNA_FECHA = "FECHA";
         public static final String COLUMNA_CANTIDAD = "CANTIDAD";
         public static final String COLUMNA_EXPECTATIVA = "EXPECTATIVA";
+        public static final String COLUMNA_TIME_FOREACH = "TIME_FOREACH";
         public static final String COLUMNA_ESTADO = "ESTADO";
     }
 
@@ -26,8 +27,8 @@ public class Contrato {
             ENTRADAS.COLUMNA_FECHA + " TEXT," +
             ENTRADAS.COLUMNA_CANTIDAD + " INTEGER," +
             ENTRADAS.COLUMNA_EXPECTATIVA + " INTEGER," +
+            ENTRADAS.COLUMNA_TIME_FOREACH + " INTEGER, " +
             ENTRADAS.COLUMNA_ESTADO + " TEXT)";
-
     public static final String SQL_CREATE_ENTRIES_EXP =
             "CREATE TABLE IF NOT EXISTS " + EXPECTATIVAS.NOMBRE_TABLA + " (" +
             EXPECTATIVAS._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
