@@ -9,14 +9,13 @@ public class Contrato {
         public static final String COLUMNA_FECHA = "FECHA";
         public static final String COLUMNA_CANTIDAD = "CANTIDAD";
         public static final String COLUMNA_EXPECTATIVA = "EXPECTATIVA";
-        public static final String COLUMNA_TIME_FOREACH = "TIME_FOREACH";
+        public static final String COLUMNA_TIME_LAST = "TIME_LAST";
         public static final String COLUMNA_ESTADO = "ESTADO";
     }
 
     public static final class EXPECTATIVAS implements BaseColumns {
         public static final String NOMBRE_TABLA = "EXPECTATIVAS";
         public static final String COLUMNA_INICIO = "FECHAINICIO";
-        public static final String COLUMNA_HOY = "HOY";
         public static final String COLUMNA_DIAS = "DIAS";
         public static final String COLUMNA_CANTIDAD = "CANTIDAD";
         public static final String COLUMNA_ESTADO = "ESTADO";
@@ -27,7 +26,7 @@ public class Contrato {
             ENTRADAS.COLUMNA_FECHA + " TEXT," +
             ENTRADAS.COLUMNA_CANTIDAD + " INTEGER," +
             ENTRADAS.COLUMNA_EXPECTATIVA + " INTEGER," +
-            ENTRADAS.COLUMNA_TIME_FOREACH + " INTEGER, " +
+            ENTRADAS.COLUMNA_TIME_LAST + " INTEGER, " +
             ENTRADAS.COLUMNA_ESTADO + " TEXT)";
     public static final String SQL_CREATE_ENTRIES_EXP =
             "CREATE TABLE IF NOT EXISTS " + EXPECTATIVAS.NOMBRE_TABLA + " (" +

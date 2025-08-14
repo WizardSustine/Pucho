@@ -42,7 +42,7 @@ public class BDManager {
 
     public Cursor fetch_puchos(){
         String[] columns = new String[]{
-                ENTRADAS._ID, ENTRADAS.COLUMNA_FECHA, ENTRADAS.COLUMNA_CANTIDAD, ENTRADAS.COLUMNA_EXPECTATIVA, ENTRADAS.COLUMNA_TIME_FOREACH, ENTRADAS.COLUMNA_ESTADO
+                ENTRADAS._ID, ENTRADAS.COLUMNA_FECHA, ENTRADAS.COLUMNA_CANTIDAD, ENTRADAS.COLUMNA_EXPECTATIVA, ENTRADAS.COLUMNA_TIME_LAST, ENTRADAS.COLUMNA_ESTADO
         };
         Cursor cursor = sqLiteDatabase.query(ENTRADAS.NOMBRE_TABLA, columns, null, null, null, null, null);//ENTRADAS.COLUMNA_FECHA + " ASC"
         if (cursor != null) {

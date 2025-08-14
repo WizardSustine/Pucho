@@ -7,25 +7,30 @@
 
     <TextView
         android:id="@+id/dateListViewPuchos"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="" />
+        android:layout_centerInParent="false"
+        android:text=""
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/cantidadListViewPuchos"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="" />
+        android:layout_centerInParent="false"
+        android:text=""
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/expectativaListViewPuchos"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_weight="1"
-        android:text="" />
+        android:layout_centerInParent="false"
+        android:text=""
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/timeforeachListViewPuchos"
@@ -33,21 +38,27 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_weight="1"
-        android:text="" />
+        android:gravity="center_horizontal"
+        android:text=""
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/stateListViewPuchos"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_weight="1"
-        android:text="" />
+        android:layout_centerInParent="false"
+        android:text=""
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/id_ListViewPuchos"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerInParent="false"
+        android:gravity="center_horizontal"
         android:text=""
         android:visibility="invisible"
         tools:visibility="gone" />

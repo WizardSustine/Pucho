@@ -1,4 +1,4 @@
-package com.example.pucho.controladores;
+package com.example.pucho;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,8 +9,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.pucho.ENTIDADES.Expectativas;
-import com.example.pucho.MainActivity;
-import com.example.pucho.R;
 import com.example.pucho.SQLite.BDManager;
 
 public class NewExpectativaActivity extends Activity {
@@ -92,12 +90,15 @@ public class NewExpectativaActivity extends Activity {
             @Override
             public void onClick(View v){
               bdManager.insert_expectativas(expectativa);
+              bdManager.close();
               returnHome();
             }
         });
+
         cancelar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                bdManager.close();
                 returnHome();
             }
         });
