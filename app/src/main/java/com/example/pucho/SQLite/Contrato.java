@@ -26,7 +26,7 @@ public class Contrato {
             ENTRADAS.COLUMNA_FECHA + " TEXT," +
             ENTRADAS.COLUMNA_CANTIDAD + " INTEGER," +
             ENTRADAS.COLUMNA_EXPECTATIVA + " INTEGER," +
-            ENTRADAS.COLUMNA_TIME_LAST + " INTEGER, " +
+            ENTRADAS.COLUMNA_TIME_LAST + " TEXT," +
             ENTRADAS.COLUMNA_ESTADO + " TEXT)";
     public static final String SQL_CREATE_ENTRIES_EXP =
             "CREATE TABLE IF NOT EXISTS " + EXPECTATIVAS.NOMBRE_TABLA + " (" +

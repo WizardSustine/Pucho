@@ -5,8 +5,8 @@ import android.content.ContentValues;
 import com.example.pucho.SQLite.Contrato;
 
 public class PuchoDia {
-    private String fecha, estado;
-    private int consumo, expectativa, time_foreach;
+    private String fecha, estado, time_last;
+    private int consumo, expectativa;
     private long _id;
 
     public PuchoDia(String fecha) {
@@ -15,7 +15,7 @@ public class PuchoDia {
         this.estado = "PENDIENTE";
         this.consumo = 0;
         this.expectativa = 0;
-        this.time_foreach = 0;
+        this.time_last = "";
     }
 
     public ContentValues toContentValues(){
@@ -23,18 +23,18 @@ public class PuchoDia {
         values.put(Contrato.ENTRADAS.COLUMNA_FECHA, fecha);
         values.put(Contrato.ENTRADAS.COLUMNA_CANTIDAD, consumo);
         values.put(Contrato.ENTRADAS.COLUMNA_EXPECTATIVA, expectativa);
-        values.put(Contrato.ENTRADAS.COLUMNA_TIME_FOREACH, time_foreach);
+        values.put(Contrato.ENTRADAS.COLUMNA_TIME_LAST, time_last);
         values.put(Contrato.ENTRADAS.COLUMNA_ESTADO, estado);
 
         return values;
     }
 
-    public int getTime_foreach() {
-        return time_foreach;
+    public String getTime_last() {
+        return time_last;
     }
 
-    public void setTime_foreach(int time_foreach) {
-        this.time_foreach = time_foreach;
+    public void setTime_last(String time_last) {
+        this.time_last = time_last;
     }
 
     public long get_id() {

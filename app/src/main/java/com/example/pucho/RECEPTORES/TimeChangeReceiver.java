@@ -1,4 +1,6 @@
-package com.example.pucho.controladores;
+package com.example.pucho.RECEPTORES;
+
+import static androidx.core.content.ContextCompat.startActivity;
 
 import android.Manifest;
 import android.app.PendingIntent;
@@ -6,12 +8,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.pucho.R;
+import com.example.pucho.controladores.NotificacionActivity;
 
 public class TimeChangeReceiver extends BroadcastReceiver {
     @Override
@@ -25,21 +31,14 @@ public class TimeChangeReceiver extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "puchochannelandroid")
                 .setSmallIcon(R.drawable.ic_smoke_notification)
                 .setContentTitle("Puchos App")
-                .setContentText("algo cambio")
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
+
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         notificationManagerCompat.notify(789, builder.build());

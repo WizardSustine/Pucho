@@ -89,6 +89,8 @@ public class NewExpectativaActivity extends Activity {
         agregar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+              expectativa.setCantidad(Integer.parseInt(cantidadPuchos.getText().toString()));
+              expectativa.setDiasRestantes(Integer.parseInt(cantidadDias.getText().toString()));
               bdManager.insert_expectativas(expectativa);
               bdManager.close();
               returnHome();

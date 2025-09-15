@@ -44,7 +44,7 @@ public class BDManager {
         String[] columns = new String[]{
                 ENTRADAS._ID, ENTRADAS.COLUMNA_FECHA, ENTRADAS.COLUMNA_CANTIDAD, ENTRADAS.COLUMNA_EXPECTATIVA, ENTRADAS.COLUMNA_TIME_LAST, ENTRADAS.COLUMNA_ESTADO
         };
-        Cursor cursor = sqLiteDatabase.query(ENTRADAS.NOMBRE_TABLA, columns, null, null, null, null, null);//ENTRADAS.COLUMNA_FECHA + " ASC"
+        Cursor cursor = sqLiteDatabase.query(ENTRADAS.NOMBRE_TABLA, columns, null, null, null, null, ENTRADAS._ID + " DESC");
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -69,16 +69,9 @@ public class BDManager {
         };
         Cursor cursor = sqLiteDatabase.query(Contrato.EXPECTATIVAS.NOMBRE_TABLA, columns, null, null, null, null, null);
         if (cursor != null) {
-            cursor.moveToFirst();
+            cursor.moveToLast();
         }
         return cursor;
     }
 
-    public Cursor fetch_last_expectativa(){
-        String[] columns = new String[]{
-                Contrato.EXPECTATIVAS._ID, Contrato.EXPECTATIVAS.COLUMNA_INICIO, Contrato.EXPECTATIVAS.COLUMNA_CANTIDAD, Contrato.EXPECTATIVAS.COLUMNA_DIAS, Contrato.EXPECTATIVAS.COLUMNA_ESTADO
-        };
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + Contrato.EXPECTATIVAS.NOMBRE_TABLA + " WHERE " + Contrato.EXPECTATIVAS._ID + " = (SELECT MAX(" + Contrato.EXPECTATIVAS._ID +") FROM " + Contrato.EXPECTATIVAS.NOMBRE_TABLA + ")", null);
-        return cursor;
-    }
 }

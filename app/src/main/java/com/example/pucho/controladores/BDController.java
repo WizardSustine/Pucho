@@ -1,14 +1,10 @@
 package com.example.pucho.controladores;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.widget.SimpleCursorAdapter;
 
 import com.example.pucho.ENTIDADES.Expectativas;
 import com.example.pucho.ENTIDADES.PuchoDia;
-import com.example.pucho.R;
-import com.example.pucho.SQLite.BDManager;
-import com.example.pucho.SQLite.Contrato;
 
 public class BDController {
 
@@ -30,7 +26,7 @@ public class BDController {
         }
     }
 
-    public PuchoDia addPuchos(String date){
+    public PuchoDia addPuchos(String date) {
         puchoDia = controladorPuchos.addPucho(date);
         return puchoDia;
     }
@@ -44,8 +40,16 @@ public class BDController {
         return puchoDia;
     }
 
+    public PuchoDia getPuchoDia() {
+        return puchoDia;
+    }
+
+    public Expectativas getExpectativas() {
+        return expectativas;
+    }
+
     public SimpleCursorAdapter getPuchosAdapter() {
-        SimpleCursorAdapter adapter = controladorPuchos.getPuchosAdapter();
-        return adapter;
+        return controladorPuchos.getPuchosAdapter();
+
     }
 }
