@@ -1,31 +1,23 @@
 package com.example.pucho.controladores;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.widget.SimpleCursorAdapter;
 
-import com.example.pucho.ENTIDADES.Expectativas;
 import com.example.pucho.ENTIDADES.PuchoDia;
-import com.example.pucho.MainActivity;
 import com.example.pucho.R;
 import com.example.pucho.SQLite.BDManager;
-import com.example.pucho.SQLite.Contrato;
+import com.example.pucho.SQLite.ContratoSQL;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 
 public class ControladorPuchos {
-    private BDManager bdManager;
+    private static BDManager bdManager;
     private PuchoDia puchoDia;
-    private Context context;
+    private static Context context;
 
     public ControladorPuchos(Context context) {
         this.context = context;
@@ -75,7 +67,6 @@ public class ControladorPuchos {
         puchoDia.setConsumo(cursor.getInt(2));
         puchoDia.setExpectativa(cursor.getInt(3));
         puchoDia.setTime_last(cursor.getString(4));
-        puchoDia.setEstado("PENDIENTE");
         cursor.close();
         bdManager.close();
     }
@@ -99,13 +90,13 @@ public class ControladorPuchos {
         return puchoDia;
     }
 
-    public SimpleCursorAdapter getPuchosAdapter() {
+    public static SimpleCursorAdapter getPuchosAdapter() {
         bdManager.open();
-        System.out.println("falla en Controlador getAdapter()");
+        System.out.println("Ejecuta el Controlador getPuchosAdapter()");
         final String[] from = new String[]{
-                Contrato.ENTRADAS._ID, Contrato.ENTRADAS.COLUMNA_FECHA, Contrato.ENTRADAS.COLUMNA_CANTIDAD, Contrato.ENTRADAS.COLUMNA_EXPECTATIVA, Contrato.ENTRADAS.COLUMNA_TIME_LAST, Contrato.ENTRADAS.COLUMNA_ESTADO
+                ContratoSQL.ENTRADAS._ID, ContratoSQL.ENTRADAS.COLUMNA_FECHA, ContratoSQL.ENTRADAS.COLUMNA_CANTIDAD, ContratoSQL.ENTRADAS.COLUMNA_EXPECTATIVA, ContratoSQL.ENTRADAS.COLUMNA_TIME_LAST
         };
-        final int[] to = new int[]{R.id.id_ListViewPuchos, R.id.dateListViewPuchos, R.id.cantidadListViewPuchos, R.id.expectativaListViewPuchos,R.id.timeforeachListViewPuchos, R.id.stateListViewPuchos};                bdManager.open();
+        final int[] to = new int[]{R.id.id_ListViewPuchos, R.id.dateListViewPuchos, R.id.cantidadListViewPuchos, R.id.expectativaListViewPuchos,R.id.timeforeachListViewPuchos};
         Cursor cursor3 = bdManager.fetch_puchos();
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(context, R.layout.view_consumo, cursor3, from, to, 0);
         adapter.notifyDataSetChanged();

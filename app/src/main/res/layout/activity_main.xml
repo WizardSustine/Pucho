@@ -22,9 +22,10 @@
             <Switch
                 android:id="@+id/notificationswitch"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="4dp"
                 android:text="Notificaciones"
                 android:textColor="#E7DEDE"
                 android:textSize="12dp"
@@ -36,14 +37,31 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="62dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:gravity="right|center_vertical"
+                android:text="establecer META"
+                android:textAlignment="gravity"
+                android:textColor="#F6F2F2"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/imgbtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_width="76dp"
+                android:layout_height="76dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginRight="2dp"
                 android:backgroundTint="#05FFFFFF"
-                app:srcCompat="@android:drawable/ic_menu_preferences" />
+                android:padding="0dp"
+                android:scaleType="fitXY"
+                android:scaleX="1"
+                android:scaleY="-1"
+                app:srcCompat="@mipmap/ic_target_img_foreground" />
         </LinearLayout>
 
         <TextView

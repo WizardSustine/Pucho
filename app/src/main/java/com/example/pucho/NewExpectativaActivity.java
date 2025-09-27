@@ -36,8 +36,7 @@ public class NewExpectativaActivity extends Activity {
         cantidadPuchos = findViewById(R.id.editPuchosCantidad);
         fechaInicio = findViewById(R.id.editTextDate);
 
-        cantidadDias.setText("0");
-        cantidadPuchos.setText("0");
+        cantidadDias.setText(String.valueOf(dias));        cantidadPuchos.setText(String.valueOf(puchos));
 
         addDias = findViewById(R.id.imageButton3);
         deleteDias = findViewById(R.id.imageButton4);
@@ -51,10 +50,12 @@ public class NewExpectativaActivity extends Activity {
         Intent intent = getIntent();
         fecha = intent.getStringExtra("date");
 
+        System.out.println(fecha + " esta es la fecha de Activity para nueva Expectativa");
+
         fechaInicio.setText(fecha);
 
         expectativa = new Expectativas(fecha);
-        expectativa.setEstado("PENDIENTE");
+        expectativa.setFechaUltima(fecha);
         expectativa.setCantidad(puchos);
         expectativa.setDiasRestantes(dias);
 
@@ -107,24 +108,24 @@ public class NewExpectativaActivity extends Activity {
     }
 
     public void setAddPuchos(){
-        puchos++;
+        puchos = Integer.parseInt(cantidadPuchos.getText().toString()) + 1;
         cantidadPuchos.setText(String.valueOf(puchos));
         expectativa.setCantidad(puchos);
     }
 
     public void setDeletePuchos(){
-        puchos--;
+        puchos = Integer.parseInt(cantidadPuchos.getText().toString()) - 1;
         cantidadPuchos.setText(String.valueOf(puchos));
         expectativa.setCantidad(puchos);
     }
 
     public void setAddDias(){
-        dias++;
+        dias = Integer.parseInt(cantidadDias.getText().toString()) + 1;
         cantidadDias.setText(String.valueOf(dias));
         expectativa.setDiasRestantes(dias);
     }
     public void setDeleteDias(){
-        dias--;
+        dias = Integer.parseInt(cantidadDias.getText().toString()) - 1;
         cantidadDias.setText(String.valueOf(dias));
         expectativa.setDiasRestantes(dias);
     }

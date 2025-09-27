@@ -7,12 +7,12 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.pucho.ENTIDADES.Expectativas;
 import com.example.pucho.ENTIDADES.PuchoDia;
-import com.example.pucho.SQLite.Contrato.ENTRADAS;
+import com.example.pucho.SQLite.ContratoSQL.ENTRADAS;
 
 public class BDManager {
-    private BDHelper bdHELPER;
+    private static BDHelper bdHELPER;
     private Context context;
-    private SQLiteDatabase sqLiteDatabase;
+    private static SQLiteDatabase sqLiteDatabase;
 
     public BDManager(Context context){
         this.context = context;
@@ -40,9 +40,9 @@ public class BDManager {
         sqLiteDatabase.delete(ENTRADAS.NOMBRE_TABLA, ENTRADAS._ID + " = " + _id, null);
     }
 
-    public Cursor fetch_puchos(){
+    public static Cursor fetch_puchos(){
         String[] columns = new String[]{
-                ENTRADAS._ID, ENTRADAS.COLUMNA_FECHA, ENTRADAS.COLUMNA_CANTIDAD, ENTRADAS.COLUMNA_EXPECTATIVA, ENTRADAS.COLUMNA_TIME_LAST, ENTRADAS.COLUMNA_ESTADO
+                ENTRADAS._ID, ENTRADAS.COLUMNA_FECHA, ENTRADAS.COLUMNA_CANTIDAD, ENTRADAS.COLUMNA_EXPECTATIVA, ENTRADAS.COLUMNA_TIME_LAST
         };
         Cursor cursor = sqLiteDatabase.query(ENTRADAS.NOMBRE_TABLA, columns, null, null, null, null, ENTRADAS._ID + " DESC");
         if (cursor != null) {
@@ -51,23 +51,23 @@ public class BDManager {
         return cursor;
     }
     public void insert_expectativas(Expectativas expectativas){
-        sqLiteDatabase.insert(Contrato.EXPECTATIVAS.NOMBRE_TABLA, null, expectativas.toContentValues());
+        sqLiteDatabase.insert(ContratoSQL.EXPECTATIVAS.NOMBRE_TABLA, null, expectativas.toContentValues());
     }
 
     public int update_expectativas(long _id, Expectativas expectativas){
-        int i = sqLiteDatabase.update(Contrato.EXPECTATIVAS.NOMBRE_TABLA, expectativas.toContentValues(), Contrato.EXPECTATIVAS._ID + " = " + _id, null);
+        int i = sqLiteDatabase.update(ContratoSQL.EXPECTATIVAS.NOMBRE_TABLA, expectativas.toContentValues(), ContratoSQL.EXPECTATIVAS._ID + " = " + _id, null);
         return i;
     }
 
     public void delete_expectativas(long _id){
-        sqLiteDatabase.delete(Contrato.EXPECTATIVAS.NOMBRE_TABLA, Contrato.EXPECTATIVAS._ID + " = " + _id, null);
+        sqLiteDatabase.delete(ContratoSQL.EXPECTATIVAS.NOMBRE_TABLA, ContratoSQL.EXPECTATIVAS._ID + " = " + _id, null);
     }
 
-    public Cursor fetch_expectativas(){
+    public static Cursor fetch_expectativas(){
         String[] columns = new String[]{
-                Contrato.EXPECTATIVAS._ID, Contrato.EXPECTATIVAS.COLUMNA_INICIO, Contrato.EXPECTATIVAS.COLUMNA_CANTIDAD, Contrato.EXPECTATIVAS.COLUMNA_DIAS, Contrato.EXPECTATIVAS.COLUMNA_ESTADO
+                ContratoSQL.EXPECTATIVAS._ID, ContratoSQL.EXPECTATIVAS.COLUMNA_INICIO, ContratoSQL.EXPECTATIVAS.COLUMNA_ULTIMA, ContratoSQL.EXPECTATIVAS.COLUMNA_CANTIDAD, ContratoSQL.EXPECTATIVAS.COLUMNA_DIAS
         };
-        Cursor cursor = sqLiteDatabase.query(Contrato.EXPECTATIVAS.NOMBRE_TABLA, columns, null, null, null, null, null);
+        Cursor cursor = sqLiteDatabase.query(ContratoSQL.EXPECTATIVAS.NOMBRE_TABLA, columns, null, null, null, null, null);
         if (cursor != null) {
             cursor.moveToLast();
         }

@@ -1,7 +1,7 @@
 package com.example.pucho.SQLite;
 
-import static com.example.pucho.SQLite.Contrato.SQL_CREATE_ENTRIES_PUCHOS;
-import static com.example.pucho.SQLite.Contrato.SQL_CREATE_ENTRIES_EXP;
+import static com.example.pucho.SQLite.ContratoSQL.SQL_CREATE_ENTRIES_PUCHOS;
+import static com.example.pucho.SQLite.ContratoSQL.SQL_CREATE_ENTRIES_EXP;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;

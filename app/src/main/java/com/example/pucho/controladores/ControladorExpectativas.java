@@ -4,13 +4,17 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.example.pucho.ENTIDADES.Expectativas;
-import com.example.pucho.ENTIDADES.PuchoDia;
 import com.example.pucho.SQLite.BDManager;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class ControladorExpectativas {
     private BDManager bdManager;
     private Expectativas expectativas;
     private Context context;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.getDefault());
     public ControladorExpectativas(Context context){
         this.context = context;
         bdManager = new BDManager(context);
@@ -20,15 +24,17 @@ public class ControladorExpectativas {
     public Expectativas verifyExistence() {
         bdManager.open();
         Cursor cursor = bdManager.fetch_expectativas();
-        System.out.println("acá en Expectativas verify Existence algo pasa");
+        System.out.println("corre Expectativas verify Existence");
         System.out.println(cursor.getColumnName(1) + " - " + cursor.getColumnName(2) + " - " + cursor.getColumnName(3));
         if (cursor.getCount() > 0) {
-            if(cursor.getInt(2) > 0){
+            if(cursor.getInt(3) > 0){
                 System.out.println("Expectativas Verify Existence, si hay expectativas");
                 cursor.close();
                 bdManager.close();
                 expectativas = new Expectativas("0000");
                 setExpectativasData();
+                restDay();
+
                 return expectativas;
             }else {
                 System.out.println("Expectativas Verify Existence, si NO hay expectativas");
@@ -44,17 +50,22 @@ public class ControladorExpectativas {
         }
     }
     public boolean restDay(){
+        Date now = new Date();
+        String currentDate = dateFormat.format(now);
+        System.out.println(currentDate + " esto es hoy");
         bdManager.open();
         Cursor cursor = bdManager.fetch_expectativas();
         if (cursor.getCount() > 0){
-            if(cursor.getInt(2) > 0){
-                int x = cursor.getInt(2) - 1;
-
+            if(cursor.getInt(4) > 0 && !cursor.getString(2).equals(currentDate)){
+                int x = cursor.getInt(4) - 1;
+                expectativas.setFechaUltima(currentDate);
                 expectativas.setDiasRestantes(x);
                 bdManager.update_expectativas(cursor.getInt(0), expectativas);
                 cursor.close();
-                setExpectativasData();
                 bdManager.close();
+                setExpectativasData();
+                System.out.println("RestDay working");
+
                 return true;
             }else{
                 cursor.close();
@@ -72,9 +83,9 @@ public class ControladorExpectativas {
         System.out.println("Set Expectativas Data on controlladorExpectativas");
         System.out.println();
         expectativas.setFechaInicio(cursor.getString(1));
-        expectativas.setCantidad(cursor.getInt(2));
-        expectativas.setDiasRestantes(cursor.getInt(3));
-        expectativas.setEstado(cursor.getString(4));
+        expectativas.setFechaUltima(cursor.getString(2));
+        expectativas.setCantidad(cursor.getInt(3));
+        expectativas.setDiasRestantes(cursor.getInt(4));
         cursor.close();
         bdManager.close();
     }

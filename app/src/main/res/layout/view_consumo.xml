@@ -43,16 +43,6 @@
         android:visibility="visible" />
 
     <TextView
-        android:id="@+id/stateListViewPuchos"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="false"
-        android:text=""
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:visibility="gone" />
-
-    <TextView
         android:id="@+id/id_ListViewPuchos"
         android:layout_width="100dp"
         android:layout_height="wrap_content"

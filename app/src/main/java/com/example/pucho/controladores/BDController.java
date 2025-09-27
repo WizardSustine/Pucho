@@ -8,10 +8,10 @@ import com.example.pucho.ENTIDADES.PuchoDia;
 
 public class BDController {
 
-    private ControladorExpectativas controladorExpectativas;
-    private ControladorPuchos controladorPuchos;
-    private PuchoDia puchoDia;
-    private Expectativas expectativas;
+    private static ControladorExpectativas controladorExpectativas;
+    private static ControladorPuchos controladorPuchos;
+    private static PuchoDia puchoDia;
+    private static Expectativas expectativas;
 
     public BDController(Context context, String date){
         controladorPuchos = new ControladorPuchos(context);
@@ -50,6 +50,5 @@ public class BDController {
 
     public SimpleCursorAdapter getPuchosAdapter() {
         return controladorPuchos.getPuchosAdapter();
-
     }
 }

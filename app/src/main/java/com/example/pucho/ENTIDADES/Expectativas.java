@@ -2,11 +2,11 @@ package com.example.pucho.ENTIDADES;
 
 import android.content.ContentValues;
 
-import com.example.pucho.SQLite.Contrato;
+import com.example.pucho.SQLite.ContratoSQL;
 
 public class Expectativas {
     private int diasRestantes, cantidad;
-    private String fechaInicio, estado;
+    private String fechaInicio, fechaUltima;
 
     public Expectativas(String fecha){
         this.fechaInicio = fecha;
@@ -14,21 +14,12 @@ public class Expectativas {
 
     public ContentValues toContentValues(){
         ContentValues values = new ContentValues();
-        values.put(Contrato.EXPECTATIVAS.COLUMNA_INICIO, fechaInicio);
-        values.put(Contrato.EXPECTATIVAS.COLUMNA_CANTIDAD, cantidad);
-        values.put(Contrato.EXPECTATIVAS.COLUMNA_DIAS, diasRestantes);
-        values.put(Contrato.EXPECTATIVAS.COLUMNA_ESTADO, estado);
+        values.put(ContratoSQL.EXPECTATIVAS.COLUMNA_INICIO, fechaInicio);
+        values.put(ContratoSQL.EXPECTATIVAS.COLUMNA_ULTIMA, fechaUltima);
+        values.put(ContratoSQL.EXPECTATIVAS.COLUMNA_CANTIDAD, cantidad);
+        values.put(ContratoSQL.EXPECTATIVAS.COLUMNA_DIAS, diasRestantes);
         return values;
     }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
     public int getDiasRestantes() {
         return diasRestantes;
     }
@@ -51,5 +42,13 @@ public class Expectativas {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public String getFechaUltima() {
+        return fechaUltima;
+    }
+
+    public void setFechaUltima(String fechaUltima) {
+        this.fechaUltima = fechaUltima;
     }
 }

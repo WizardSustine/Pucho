@@ -2,17 +2,16 @@ package com.example.pucho.ENTIDADES;
 
 import android.content.ContentValues;
 
-import com.example.pucho.SQLite.Contrato;
+import com.example.pucho.SQLite.ContratoSQL;
 
 public class PuchoDia {
-    private String fecha, estado, time_last;
+    private String fecha, time_last;
     private int consumo, expectativa;
     private long _id;
 
     public PuchoDia(String fecha) {
         this._id = 0;
         this.fecha = fecha;
-        this.estado = "PENDIENTE";
         this.consumo = 0;
         this.expectativa = 0;
         this.time_last = "";
@@ -20,11 +19,10 @@ public class PuchoDia {
 
     public ContentValues toContentValues(){
         ContentValues values = new ContentValues();
-        values.put(Contrato.ENTRADAS.COLUMNA_FECHA, fecha);
-        values.put(Contrato.ENTRADAS.COLUMNA_CANTIDAD, consumo);
-        values.put(Contrato.ENTRADAS.COLUMNA_EXPECTATIVA, expectativa);
-        values.put(Contrato.ENTRADAS.COLUMNA_TIME_LAST, time_last);
-        values.put(Contrato.ENTRADAS.COLUMNA_ESTADO, estado);
+        values.put(ContratoSQL.ENTRADAS.COLUMNA_FECHA, fecha);
+        values.put(ContratoSQL.ENTRADAS.COLUMNA_CANTIDAD, consumo);
+        values.put(ContratoSQL.ENTRADAS.COLUMNA_EXPECTATIVA, expectativa);
+        values.put(ContratoSQL.ENTRADAS.COLUMNA_TIME_LAST, time_last);
 
         return values;
     }
@@ -51,14 +49,6 @@ public class PuchoDia {
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
     }
 
     public int getConsumo() {
