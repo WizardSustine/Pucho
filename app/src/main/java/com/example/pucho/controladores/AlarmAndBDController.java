@@ -56,4 +56,12 @@ public class AlarmAndBDController {
     public boolean setNotificationPermission(){
         return alarmEvent.notificationApp.notificationPermission();
     }
+
+    public void startNotification(){
+        alarmEvent.notificationApp.notiBuild();
+    }
+
+    public void closeNotification(){
+        alarmEvent.notificationApp.closeNotification();
+    }
 }

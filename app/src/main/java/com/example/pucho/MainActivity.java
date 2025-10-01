@@ -1,9 +1,11 @@
 package com.example.pucho;
 
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,17 +17,33 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.pucho.ENTIDADES.PuchoDia;
+import com.example.pucho.ViewGroups.CollectionAdapterApp;
+import com.example.pucho.ViewGroups.GraphFragment;
+import com.example.pucho.ViewGroups.ListFragment;
 import com.example.pucho.controladores.AlarmAndBDController;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    private static ListView listView;
+    //private static ListView listView;
+
+    private Fragment listFragment, graphFragment;
+    private FragmentContainerView containerView;
+    public CollectionAdapterApp viewPagerAdapter;
+    public ViewPager2 viewPager2;
     private static Button btnAddPucho;
     private static ImageButton newExpectativaBtn;
     private static Switch switchNotifications;
@@ -49,14 +67,42 @@ public class MainActivity extends AppCompatActivity {
         Date now = new Date();
         formattedDate = dateFormat.format(now);;
 
+        //Acá está el código para el ViewPager2
+        viewPager2 = findViewById(R.id.pager);
+        viewPagerAdapter = new CollectionAdapterApp(getSupportFragmentManager(),getLifecycle());
+
+
         alarmAndBDController = new AlarmAndBDController(this);
 
+        listFragment = new ListFragment();
+        graphFragment = new GraphFragment();
         hoy = alarmAndBDController.getPucho();
+
+        //Acá es para añadir fragmentos al viewPager
+        viewPagerAdapter.addFragment(listFragment);
+        viewPagerAdapter.addFragment(graphFragment);
+        viewPager2.setAdapter(viewPagerAdapter);
+
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
+
+        new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                switch (position){
+                    case 0:
+
+                        break;
+                    case 1:
+                        //tab.setText("Grafico");
+                        break;
+                }
+            }
+        }).attach();
+
 
         counterView = findViewById(R.id.textView);
         dateView = findViewById(R.id.textView2);
         dateView.setText(formattedDate);
-        listView = findViewById(R.id.listView);
 
         counterView.setText(String.valueOf(hoy.getConsumo()));
 
@@ -69,8 +115,8 @@ public class MainActivity extends AppCompatActivity {
         switchNotifications.setChecked(savedState);
         notificationSwitch = savedState;
 
-        listView.setEmptyView(findViewById(R.id.empty));
-        setListView();
+        //listView.setEmptyView(findViewById(R.id.empty));
+        //listFragment.setListView();
 
 
 
@@ -79,6 +125,9 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPreferences.Editor editor = preferences.edit();
                 if(isChecked){
+                    /*if(!alarmAndBDController.setNotificationPermission()){
+
+                    };*/
                     System.out.println("Switch is ON");
                     notificationSwitch = true;
 
@@ -104,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 alarmAndBDController.addPucho();
-                setListView();
+                ListFragment.upload();
                 counterView.setText(String.valueOf(hoy.getConsumo()));
             }
         });
@@ -124,13 +173,14 @@ public class MainActivity extends AppCompatActivity {
         formattedDate = dateFormat.format(now);;
         hoy = alarmAndBDController.setExpectativas();
         counterView.setText(String.valueOf(hoy.getConsumo()));
-        setListView();
+        //setListView();
 
         SharedPreferences preferences = getSharedPreferences(ContratoApp.MYPREFS, MODE_PRIVATE);
         boolean savedState = preferences.getBoolean(ContratoApp.SWITCH_STATE, false); // false is the default value if no state is found
         switchNotifications.setChecked(savedState);
         if (intent.getIntExtra(ContratoApp.CANCELAR, 0) == 3) {
             System.out.println("CANCELAR NOTIFICATION AHORA POR FAVOR");
+            alarmAndBDController.closeNotification();
             System.out.println("CANCELAR NOTIFICATION AHORA POR FAVOR");
             System.out.println("CANCELAR NOTIFICATION AHORA POR FAVOR");
             System.out.println("CANCELAR NOTIFICATION AHORA POR FAVOR");
@@ -147,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
         formattedDate = dateFormat.format(now);;
         hoy = alarmAndBDController.setExpectativas();
         counterView.setText(String.valueOf(hoy.getConsumo()));
-        setListView();
+        //setListView();
 
         SharedPreferences preferences = getSharedPreferences(ContratoApp.MYPREFS, MODE_PRIVATE);
         boolean savedState = preferences.getBoolean(ContratoApp.SWITCH_STATE, false); // false is the default value if no state is found
@@ -160,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void setListView(){
+/*    private void setListView(){
         System.out.println("Set List View en Main");
         SimpleCursorAdapter adapter = alarmAndBDController.getAdapter();
         adapter.notifyDataSetChanged();
@@ -175,5 +225,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+*/
 }

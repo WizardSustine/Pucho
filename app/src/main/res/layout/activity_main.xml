@@ -94,22 +94,27 @@
             android:textColorHighlight="@color/white"
             android:textSize="60dp" />
 
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="378dp"
-            android:layout_height="318dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="24dp"
-            android:visibility="visible">
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
 
-        </ListView>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="31dp"
+            android:background="#00FFFFFF"
+            app:tabBackground="@drawable/tab_selector"
+            app:tabGravity="center"
+            app:tabIndicatorGravity="bottom"
+            app:tabIndicatorHeight="0dp" />
 
-        <TextView
+        <!--TextView
             android:id="@+id/empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="" />
+            android:text="" /-->
 
     </LinearLayout>
 
