@@ -6,6 +6,8 @@ import android.widget.SimpleCursorAdapter;
 import com.example.pucho.ENTIDADES.Expectativas;
 import com.example.pucho.ENTIDADES.PuchoDia;
 
+import java.util.ArrayList;
+
 public class BDController {
 
     private static ControladorExpectativas controladorExpectativas;
@@ -50,5 +52,9 @@ public class BDController {
 
     public SimpleCursorAdapter getPuchosAdapter() {
         return controladorPuchos.getPuchosAdapter();
+    }
+
+    public static ArrayList<PuchoDia> get30Dias(){
+        return controladorPuchos.getLast30();
     }
 }

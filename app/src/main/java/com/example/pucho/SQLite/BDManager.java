@@ -50,6 +50,12 @@ public class BDManager {
         }
         return cursor;
     }
+    public static Cursor fetch_graph_puchos() {
+        String selectQuery = "SELECT * FROM " + ENTRADAS.NOMBRE_TABLA +
+                " ORDER BY " + ENTRADAS._ID + " DESC " +
+                " LIMIT 30";
+        return sqLiteDatabase.rawQuery(selectQuery, null);
+    }
     public void insert_expectativas(Expectativas expectativas){
         sqLiteDatabase.insert(ContratoSQL.EXPECTATIVAS.NOMBRE_TABLA, null, expectativas.toContentValues());
     }

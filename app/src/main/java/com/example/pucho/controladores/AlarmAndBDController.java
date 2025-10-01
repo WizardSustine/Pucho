@@ -9,6 +9,7 @@ import com.example.pucho.ENTIDADES.AlarmEvent;
 import com.example.pucho.ENTIDADES.PuchoDia;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -63,5 +64,9 @@ public class AlarmAndBDController {
 
     public void closeNotification(){
         alarmEvent.notificationApp.closeNotification();
+    }
+
+    public static ArrayList<PuchoDia> get30Dias(){
+        return bdController.get30Dias();
     }
 }

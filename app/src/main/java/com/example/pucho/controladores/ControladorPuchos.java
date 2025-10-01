@@ -10,6 +10,7 @@ import com.example.pucho.SQLite.BDManager;
 import com.example.pucho.SQLite.ContratoSQL;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -101,5 +102,45 @@ public class ControladorPuchos {
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(context, R.layout.view_consumo, cursor3, from, to, 0);
         adapter.notifyDataSetChanged();
         return adapter;
+    }
+
+    public static ArrayList<PuchoDia> getLast30(){
+        bdManager.open();
+        Cursor cursor = null;
+        ArrayList<PuchoDia> estaListPuchoDia = new ArrayList<>();
+        try {
+            cursor = bdManager.fetch_graph_puchos();
+
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    // Process each row here
+                    int columnId = cursor.getColumnIndex(ContratoSQL.ENTRADAS._ID);
+                    int columnFecha = cursor.getColumnIndex(ContratoSQL.ENTRADAS.COLUMNA_FECHA);
+                    int columnConsumo = cursor.getColumnIndex(ContratoSQL.ENTRADAS.COLUMNA_CANTIDAD);
+                    int columnExp = cursor.getColumnIndex(ContratoSQL.ENTRADAS.COLUMNA_EXPECTATIVA);
+                    if (columnId != -1) {
+                        int x = cursor.getInt(columnId);
+                        String data = cursor.getString(columnFecha);
+                        int y = cursor.getInt(columnConsumo);
+                        int z = cursor.getInt(columnExp);
+                        PuchoDia pucho = new PuchoDia(data);
+                        pucho.set_id(x);
+                        pucho.setConsumo(y);
+                        pucho.setExpectativa(z);
+                        estaListPuchoDia.add(pucho);
+                                System.out.println("Funcionaría la lista " + pucho.getFecha());
+                    }
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            if (bdManager != null) {
+                bdManager.close();
+            }
+        }
+
+        return estaListPuchoDia;
     }
 }
