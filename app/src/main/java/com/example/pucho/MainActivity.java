@@ -1,28 +1,20 @@
 package com.example.pucho;
 
-
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainerView;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.pucho.ENTIDADES.PuchoDia;
@@ -38,12 +30,9 @@ import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    //private static ListView listView;
-
-    private Fragment listFragment, graphFragment;
-    private FragmentContainerView containerView;
-    public CollectionAdapterApp viewPagerAdapter;
-    public ViewPager2 viewPager2;
+    private static Fragment listFragment, graphFragment;
+    public static CollectionAdapterApp viewPagerAdapter;
+    public static ViewPager2 viewPager2;
     private static Button btnAddPucho;
     private static ImageButton newExpectativaBtn;
     private static Switch switchNotifications;
@@ -90,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 switch (position){
                     case 0:
-
                         break;
                     case 1:
                         //tab.setText("Grafico");
@@ -152,8 +140,10 @@ public class MainActivity extends AppCompatActivity {
         btnAddPucho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alarmAndBDController.addPucho();
+                alarmAndBDController.closeNotification();
+                hoy = alarmAndBDController.addPucho();
                 ListFragment.upload();
+                GraphFragment.upload();
                 counterView.setText(String.valueOf(hoy.getConsumo()));
             }
         });
@@ -170,10 +160,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Date now = new Date();
-        formattedDate = dateFormat.format(now);;
+        formattedDate = dateFormat.format(now);
         hoy = alarmAndBDController.setExpectativas();
         counterView.setText(String.valueOf(hoy.getConsumo()));
-        //setListView();
+
+        listFragment = new ListFragment();
+        graphFragment = new GraphFragment();
 
         SharedPreferences preferences = getSharedPreferences(ContratoApp.MYPREFS, MODE_PRIVATE);
         boolean savedState = preferences.getBoolean(ContratoApp.SWITCH_STATE, false); // false is the default value if no state is found
@@ -181,11 +173,7 @@ public class MainActivity extends AppCompatActivity {
         if (intent.getIntExtra(ContratoApp.CANCELAR, 0) == 3) {
             System.out.println("CANCELAR NOTIFICATION AHORA POR FAVOR");
             alarmAndBDController.closeNotification();
-            System.out.println("CANCELAR NOTIFICATION AHORA POR FAVOR");
-            System.out.println("CANCELAR NOTIFICATION AHORA POR FAVOR");
-            System.out.println("CANCELAR NOTIFICATION AHORA POR FAVOR");
-            System.out.println("CANCELAR NOTIFICATION AHORA POR FAVOR");
-            System.out.println("CANCELAR NOTIFICATION AHORA POR FAVOR");
+
         }
 
     }
@@ -197,7 +185,9 @@ public class MainActivity extends AppCompatActivity {
         formattedDate = dateFormat.format(now);;
         hoy = alarmAndBDController.setExpectativas();
         counterView.setText(String.valueOf(hoy.getConsumo()));
-        //setListView();
+
+        listFragment = new ListFragment();
+        graphFragment = new GraphFragment();
 
         SharedPreferences preferences = getSharedPreferences(ContratoApp.MYPREFS, MODE_PRIVATE);
         boolean savedState = preferences.getBoolean(ContratoApp.SWITCH_STATE, false); // false is the default value if no state is found
@@ -210,20 +200,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-/*    private void setListView(){
-        System.out.println("Set List View en Main");
-        SimpleCursorAdapter adapter = alarmAndBDController.getAdapter();
-        adapter.notifyDataSetChanged();
-        listView.setAdapter(adapter);
-
-        System.out.println("Estableciendo ListWie on item click listener");
-        // OnCLickListiner For List Items
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
-
-            }
-        });
-    }
-*/
 }

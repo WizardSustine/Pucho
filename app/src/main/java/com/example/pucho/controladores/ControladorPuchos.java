@@ -128,7 +128,6 @@ public class ControladorPuchos {
                         pucho.setConsumo(y);
                         pucho.setExpectativa(z);
                         estaListPuchoDia.add(pucho);
-                                System.out.println("Funcionaría la lista " + pucho.getFecha());
                     }
                 } while (cursor.moveToNext());
             }

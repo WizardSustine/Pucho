@@ -69,7 +69,7 @@ public class AlarmEvent {
             SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
             //alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
             alarmManager.cancel(pendingIntent);
-            alarmManager.set(AlarmManager.RTC, 0, pendingIntent);
+            alarmManager.set(AlarmManager.RTC, millis, pendingIntent);
             System.out.println("Alarm is set");
 
             System.out.println(timeFormat.format(millis));

@@ -25,25 +25,32 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class GraphFragment extends Fragment {
-    private LineChart lineChart;
-    private ArrayList<PuchoDia> arrayList;
-    private List<String> list;
-    private List<Float> listConsumo, listExp;
-    private int count;
-    private AlarmAndBDController alarmAndBDController;
+    private static LineChart lineChart;
+    private static ArrayList<PuchoDia> arrayList;
+    private static List<String> list;
+    private static List<Float> listConsumo, listExp;
+    private static int count;
+    private static View contentView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View contentView = inflater.inflate(R.layout.fragment_graph, container, false);
+        contentView = inflater.inflate(R.layout.fragment_graph, container, false);
 
-        alarmAndBDController = new AlarmAndBDController(contentView.getContext());
-        arrayList = alarmAndBDController.get30Dias();
-        
-        lineChart = contentView.findViewById(R.id.lineal_chart);
+        setLineChart(contentView.findViewById(R.id.lineal_chart));
+
+        return contentView;
+    }
+    public static void upload(){
+        setLineChart(lineChart);
+    }
+    public static void setLineChart(LineChart l){
+        lineChart = l;
+        arrayList = AlarmAndBDController.get30Dias();
         list = new ArrayList<>();
         listConsumo = new ArrayList<>();
         listExp = new ArrayList<>();
@@ -54,6 +61,8 @@ public class GraphFragment extends Fragment {
         lineChart.setDescription(description);
         lineChart.getAxisRight().setDrawLabels(false);
 
+        Collections.reverse(arrayList);
+
         arrayList.forEach(puchoDia -> {
             list.add(puchoDia.getFecha());
             listConsumo.add((float)puchoDia.getConsumo());
@@ -63,16 +72,20 @@ public class GraphFragment extends Fragment {
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(list));
+        xAxis.setLabelRotationAngle(90f);
+        xAxis.setTextColor(Color.WHITE);
+        xAxis.setAxisLineColor(Color.WHITE);
 
         xAxis.setLabelCount(list.size());
         xAxis.setGranularity(1f);
 
         YAxis yAxis = lineChart.getAxisLeft();
         yAxis.setAxisMinimum(0f);
-        yAxis.setAxisMaximum(40f);
+        yAxis.setAxisMaximum(25f);
         yAxis.setAxisLineWidth(2f);
-        yAxis.setAxisLineColor(Color.BLACK);
+        yAxis.setAxisLineColor(Color.WHITE);
         yAxis.setLabelCount(10);
+        yAxis.setTextColor(Color.WHITE);
 
         List<Entry> entriesConsumo = new ArrayList<>();
         count = 0;
@@ -89,20 +102,18 @@ public class GraphFragment extends Fragment {
 
         LineDataSet dataSetConsumo = new LineDataSet(entriesConsumo, "CONSUMO");
         dataSetConsumo.setColor(Color.BLUE);
+        dataSetConsumo.setDrawCircles(false);
+        dataSetConsumo.setDrawValues(true);
+        dataSetConsumo.setValueTextColor(Color.WHITE);
 
         LineDataSet dataSetExp = new LineDataSet(entriesExp, "META");
         dataSetExp.setColor(Color.RED);
+        dataSetExp.setDrawCircles(false);
+        dataSetExp.setDrawValues(false);
 
-        LineData lineDataConsumo = new LineData(dataSetConsumo);
+        LineData lineData = new LineData(dataSetConsumo, dataSetExp);
+        lineChart.getLegend().setTextColor(Color.WHITE);
+        lineChart.setData(lineData);
 
-
-        LineData lineDataMeta = new LineData(dataSetConsumo);
-
-        lineChart.setData(lineDataConsumo);
-
-        lineChart.setData(lineDataMeta);
-
-        return contentView;
     }
-
 }

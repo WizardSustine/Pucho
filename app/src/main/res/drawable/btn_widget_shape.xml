@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:width="50dp" android:height="50dp">
+        <shape android:shape="oval" >
+            <solid android:color="#507904" />
+            <corners android:radius="16dp" /> <!-- Example: Rounded corners with 16dp radius -->
+            <stroke android:color="#000000" android:width="2dp" />
+        </shape>
+    </item>
+    <item android:width="45dp" android:height="35dp" android:left="15dp" android:top="20dp">
+        <rotate
+            android:fromDegrees="10"
+            android:toDegrees="45"
+            android:pivotX="50%"
+            android:pivotY="50%" >
+
+            <bitmap android:src="@mipmap/ic_launcher_foreground"/>
+        </rotate>
+    </item>
+</layer-list>
+

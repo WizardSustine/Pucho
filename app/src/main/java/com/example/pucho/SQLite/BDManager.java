@@ -9,6 +9,8 @@ import com.example.pucho.ENTIDADES.Expectativas;
 import com.example.pucho.ENTIDADES.PuchoDia;
 import com.example.pucho.SQLite.ContratoSQL.ENTRADAS;
 
+import java.util.ArrayList;
+
 public class BDManager {
     private static BDHelper bdHELPER;
     private Context context;
@@ -30,7 +32,6 @@ public class BDManager {
     public void insert_puchos(PuchoDia pucho){
         sqLiteDatabase.insert(ENTRADAS.NOMBRE_TABLA, null, pucho.toContentValues());
     }
-
     public int update_puchos(long _id, PuchoDia pucho){
         int x =sqLiteDatabase.update(ENTRADAS.NOMBRE_TABLA, pucho.toContentValues(), ENTRADAS._ID + " = " + _id, null);
         return x;

@@ -27,4 +27,5 @@ public class BDHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_ENTRIES_EXP);
         onCreate(db);
     }
+
 }

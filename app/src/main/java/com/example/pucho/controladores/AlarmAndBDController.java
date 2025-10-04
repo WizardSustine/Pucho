@@ -35,11 +35,12 @@ public class AlarmAndBDController {
             alarmEvent.setNotificationTrigger(alarmEvent.setTimeNextPucho(hoy, formattedDate), notificationSwitch);
         }
     }
-    public void addPucho(){
+    public PuchoDia addPucho(){
         hoy = bdController.addPuchos(formattedDate);
         if(hoy.getExpectativa() > hoy.getConsumo() && hoy.getConsumo() > 0){
             setAlarmEvent(1);
         }
+        return hoy;
     }
 
     public static SimpleCursorAdapter getAdapter(){
