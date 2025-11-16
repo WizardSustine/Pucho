@@ -12,20 +12,23 @@ import com.example.pucho.SQLite.ContratoSQL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 
 public class ControladorPuchos {
     private static BDManager bdManager;
     private PuchoDia puchoDia;
-    private static Context context;
 
     public ControladorPuchos(Context context) {
-        this.context = context;
         bdManager = new BDManager(context);
         puchoDia = new PuchoDia("00-00-0000");
     }
-
+    public void delete_pucho(long id){
+        bdManager.open();
+        bdManager.delete_pucho(id);
+        bdManager.close();
+    }
     public void verifyExistence(String date) {
         bdManager.open();
         Cursor cursor = bdManager.fetch_puchos();
@@ -52,14 +55,12 @@ public class ControladorPuchos {
             setPuchoBDData();
         }
     }
-
     public void setExpectativa(int k) {
         bdManager.open();
         puchoDia.setExpectativa(k);
         bdManager.update_puchos(puchoDia.get_id(), puchoDia);
         bdManager.close();
     }
-
     private void setPuchoBDData() {
         bdManager.open();
         Cursor cursor = bdManager.fetch_puchos();
@@ -71,7 +72,6 @@ public class ControladorPuchos {
         cursor.close();
         bdManager.close();
     }
-
     public PuchoDia addPucho(String date) {
         verifyExistence(date);
         bdManager.open();
@@ -86,27 +86,54 @@ public class ControladorPuchos {
         bdManager.close();
         return puchoDia;
     }
-
     public PuchoDia getPuchoDia() {
         return puchoDia;
     }
-
-    public static SimpleCursorAdapter getPuchosAdapter() {
-        bdManager.open();
+    public static ArrayList<PuchoDia> getPuchosAdapter() {
         System.out.println("Ejecuta el Controlador getPuchosAdapter()");
-        final String[] from = new String[]{
+        /*final String[] from = new String[]{
                 ContratoSQL.ENTRADAS._ID, ContratoSQL.ENTRADAS.COLUMNA_FECHA, ContratoSQL.ENTRADAS.COLUMNA_CANTIDAD, ContratoSQL.ENTRADAS.COLUMNA_EXPECTATIVA, ContratoSQL.ENTRADAS.COLUMNA_TIME_LAST
         };
         final int[] to = new int[]{R.id.id_ListViewPuchos, R.id.dateListViewPuchos, R.id.cantidadListViewPuchos, R.id.expectativaListViewPuchos,R.id.timeforeachListViewPuchos};
-        Cursor cursor3 = bdManager.fetch_puchos();
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(context, R.layout.view_consumo, cursor3, from, to, 0);
-        adapter.notifyDataSetChanged();
-        return adapter;
-    }
-
-    public static ArrayList<PuchoDia> getLast30(){
+*/
+        ArrayList<PuchoDia> estaLista = new ArrayList<>();
         bdManager.open();
+        Cursor cursor3 = bdManager.fetch_puchos();
+        try{
+            if (cursor3 != null && cursor3.moveToFirst()) {
+                do {
+                    // Process each row here
+                    int columnId = cursor3.getColumnIndex(ContratoSQL.ENTRADAS._ID);
+                    int columnFecha = cursor3.getColumnIndex(ContratoSQL.ENTRADAS.COLUMNA_FECHA);
+                    int columnConsumo = cursor3.getColumnIndex(ContratoSQL.ENTRADAS.COLUMNA_CANTIDAD);
+                    int columnExp = cursor3.getColumnIndex(ContratoSQL.ENTRADAS.COLUMNA_EXPECTATIVA);
+                    if (columnId != -1) {
+                        int x = cursor3.getInt(columnId);
+                        String data = cursor3.getString(columnFecha);
+                        int y = cursor3.getInt(columnConsumo);
+                        int z = cursor3.getInt(columnExp);
+                        PuchoDia pucho = new PuchoDia(data);
+                        pucho.set_id(x);
+                        pucho.setConsumo(y);
+                        pucho.setExpectativa(z);
+                        estaLista.add(pucho);
+                    }
+                } while (cursor3.moveToNext());
+            }
+
+        } finally {
+            if (cursor3 != null) {
+                cursor3.close();
+                bdManager.close();
+            }
+        }
+        /*SimpleCursorAdapter adapter = new SimpleCursorAdapter(context, R.layout.view_consumo, cursor3, from, to, 0);
+        adapter.notifyDataSetChanged();*/
+        return estaLista;
+    }
+    public static ArrayList<PuchoDia> getLast30(){
         Cursor cursor = null;
+        bdManager.open();
         ArrayList<PuchoDia> estaListPuchoDia = new ArrayList<>();
         try {
             cursor = bdManager.fetch_graph_puchos();
@@ -134,12 +161,11 @@ public class ControladorPuchos {
         } finally {
             if (cursor != null) {
                 cursor.close();
-            }
-            if (bdManager != null) {
                 bdManager.close();
             }
         }
 
+        bdManager.close();
         return estaListPuchoDia;
     }
 }

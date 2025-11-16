@@ -47,7 +47,7 @@ public class TimeChangeReceiver extends BroadcastReceiver {
             alarmAndBDController.closeNotification();
             alarmAndBDController.addPucho();
         }
-
-
     }
+
+
 }

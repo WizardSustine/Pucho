@@ -6,14 +6,16 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.pucho.ADAPTADORES.PuchoListAdapter;
 import com.example.pucho.ENTIDADES.PuchoDia;
 import com.example.pucho.R;
-import com.example.pucho.controladores.AlarmAndBDController;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
@@ -24,13 +26,12 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class GraphFragment extends Fragment {
     private static LineChart lineChart;
-    private static ArrayList<PuchoDia> arrayList;
+    private static MainViewModel viewModel;
     private static List<String> list;
     private static List<Float> listConsumo, listExp;
     private static int count;
@@ -40,20 +41,32 @@ public class GraphFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         contentView = inflater.inflate(R.layout.fragment_graph, container, false);
-
-        setLineChart(contentView.findViewById(R.id.lineal_chart));
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        lineChart = contentView.findViewById(R.id.lineal_chart);
+        viewModel.getGraphModel().observe(getViewLifecycleOwner(), new Observer<ArrayList<PuchoDia>>() {
+            @Override
+            public void onChanged(ArrayList<PuchoDia> puchoDias) {
+                System.out.println("tu abuela");
+                lineChart.notifyDataSetChanged();
+                lineChart.invalidate();
+                setLineChart(puchoDias);
+            }
+        });
 
         return contentView;
     }
-    public static void upload(){
-        setLineChart(lineChart);
-    }
-    public static void setLineChart(LineChart l){
-        lineChart = l;
-        arrayList = AlarmAndBDController.get30Dias();
-        list = new ArrayList<>();
-        listConsumo = new ArrayList<>();
-        listExp = new ArrayList<>();
+    public static void setLineChart(ArrayList<PuchoDia> arrayList){
+
+
+        if(list == null) {
+            list = new ArrayList<>();
+            listConsumo = new ArrayList<>();
+            listExp = new ArrayList<>();
+        }else{
+            list.clear();
+            listConsumo.clear();
+            listExp.clear();
+        }
 
         Description description = new Description();
         description.setText("CONSUMO");

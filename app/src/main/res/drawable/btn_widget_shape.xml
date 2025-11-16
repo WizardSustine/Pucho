@@ -7,14 +7,14 @@
             <stroke android:color="#000000" android:width="2dp" />
         </shape>
     </item>
-    <item android:width="45dp" android:height="35dp" android:left="15dp" android:top="20dp">
+    <item android:width="52dp" android:height="40dp" android:left="0dp" android:top="0dp" >
         <rotate
-            android:fromDegrees="10"
-            android:toDegrees="45"
-            android:pivotX="50%"
-            android:pivotY="50%" >
+            android:fromDegrees="15"
+            android:toDegrees="0"
+            android:pivotX="0%"
+            android:pivotY="0%" >
 
-            <bitmap android:src="@mipmap/ic_launcher_foreground"/>
+            <bitmap android:src="@mipmap/ic_launcher_foreground" />
         </rotate>
     </item>
 </layer-list>

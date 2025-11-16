@@ -28,9 +28,8 @@ public class BDController {
         }
     }
 
-    public PuchoDia addPuchos(String date) {
+    public void addPuchos(String date) {
         puchoDia = controladorPuchos.addPucho(date);
-        return puchoDia;
     }
 
     public PuchoDia setExpectativa(){
@@ -42,6 +41,9 @@ public class BDController {
         return puchoDia;
     }
 
+    public void delete_pucho(long id){
+        controladorPuchos.delete_pucho(id);
+    }
     public PuchoDia getPuchoDia() {
         return puchoDia;
     }
@@ -50,7 +52,7 @@ public class BDController {
         return expectativas;
     }
 
-    public SimpleCursorAdapter getPuchosAdapter() {
+    public static ArrayList<PuchoDia> getPuchosAdapter() {
         return controladorPuchos.getPuchosAdapter();
     }
 

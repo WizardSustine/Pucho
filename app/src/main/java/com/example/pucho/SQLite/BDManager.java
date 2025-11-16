@@ -37,7 +37,7 @@ public class BDManager {
         return x;
     }
 
-    public void delete_puchos(long _id){
+    public void delete_pucho(long _id){
         sqLiteDatabase.delete(ENTRADAS.NOMBRE_TABLA, ENTRADAS._ID + " = " + _id, null);
     }
 

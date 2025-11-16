@@ -14,14 +14,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.pucho.ENTIDADES.PuchoDia;
 import com.example.pucho.ViewGroups.CollectionAdapterApp;
 import com.example.pucho.ViewGroups.GraphFragment;
 import com.example.pucho.ViewGroups.ListFragment;
-import com.example.pucho.controladores.AlarmAndBDController;
+import com.example.pucho.ViewGroups.MainViewModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -37,22 +36,16 @@ public class MainActivity extends AppCompatActivity {
     private static ImageButton newExpectativaBtn;
     private static Switch switchNotifications;
     private static TextView counterView, dateView;
-    private PuchoDia hoy;
     private String formattedDate;
-    private AlarmAndBDController alarmAndBDController;
-    public static boolean notificationSwitch;
+    public static boolean savedState;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    private MainViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-/*        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });*/
+
         Date now = new Date();
         formattedDate = dateFormat.format(now);;
 
@@ -60,18 +53,20 @@ public class MainActivity extends AppCompatActivity {
         viewPager2 = findViewById(R.id.pager);
         viewPagerAdapter = new CollectionAdapterApp(getSupportFragmentManager(),getLifecycle());
 
+        //alarmAndBDController = new AlarmAndBDController(this);
 
-        alarmAndBDController = new AlarmAndBDController(this);
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         listFragment = new ListFragment();
-        graphFragment = new GraphFragment();
-        hoy = alarmAndBDController.getPucho();
 
-        //Acá es para añadir fragmentos al viewPager
+        graphFragment = new GraphFragment();
+
+        //Acá es para añadir fragmentos al viewPager. Agrego un fragmento con lista diaria y otro con la misma data en grafico lineal
         viewPagerAdapter.addFragment(listFragment);
         viewPagerAdapter.addFragment(graphFragment);
         viewPager2.setAdapter(viewPagerAdapter);
 
+        //Un tab para que tenga algún señalador y se note que se puede cambiar la vista
         TabLayout tabLayout = findViewById(R.id.tab_layout);
 
         new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
@@ -90,23 +85,18 @@ public class MainActivity extends AppCompatActivity {
 
         counterView = findViewById(R.id.textView);
         dateView = findViewById(R.id.textView2);
-        dateView.setText(formattedDate);
-
-        counterView.setText(String.valueOf(hoy.getConsumo()));
 
         btnAddPucho = findViewById(R.id.btn_add);
         newExpectativaBtn = findViewById(R.id.imgbtn);
         switchNotifications = findViewById(R.id.notificationswitch);
 
+        dateView.setText(formattedDate);
+        counterView.setText(String.valueOf(viewModel.getConsumo()));
+
+        //Guardo el estado del switch
         SharedPreferences preferences = getSharedPreferences(ContratoApp.MYPREFS, MODE_PRIVATE);
-        boolean savedState = preferences.getBoolean(ContratoApp.SWITCH_STATE, false); // false is the default value if no state is found
+        savedState = preferences.getBoolean(ContratoApp.SWITCH_STATE, false); // false is the default value if no state is found
         switchNotifications.setChecked(savedState);
-        notificationSwitch = savedState;
-
-        //listView.setEmptyView(findViewById(R.id.empty));
-        //listFragment.setListView();
-
-
 
         switchNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -117,22 +107,22 @@ public class MainActivity extends AppCompatActivity {
 
                     };*/
                     System.out.println("Switch is ON");
-                    notificationSwitch = true;
+                    savedState = true;
 
                     editor.putBoolean(ContratoApp.SWITCH_STATE, true); // "switch_state" is the key
                     editor.apply(); // Apply the changes asynchronously
 
-                    if(hoy.getExpectativa() > hoy.getConsumo() && hoy.getConsumo() > 0){
-                        alarmAndBDController.setAlarmEvent(1);
+                    if(viewModel.getExpectativas() > viewModel.getConsumo() && viewModel.getConsumo() > 0){
+                        viewModel.setAlarm(1);
                     }
                 }else{
                     System.out.println("Switch is OFF");
-                    notificationSwitch = false;
+                    savedState = false;
 
                     editor.putBoolean("switch_state", false); // "switch_state" is the key
                     editor.apply(); // Apply the changes asynchronously
 
-                    alarmAndBDController.setAlarmEvent(0);
+                    viewModel.setAlarm(0);
                 }
             }
         });
@@ -140,11 +130,9 @@ public class MainActivity extends AppCompatActivity {
         btnAddPucho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alarmAndBDController.closeNotification();
-                hoy = alarmAndBDController.addPucho();
-                ListFragment.upload();
-                GraphFragment.upload();
-                counterView.setText(String.valueOf(hoy.getConsumo()));
+                viewModel.closeNotification();
+                viewModel.addPucho();
+                counterView.setText(String.valueOf(viewModel.getConsumo()));
             }
         });
 
@@ -161,21 +149,16 @@ public class MainActivity extends AppCompatActivity {
         super.onNewIntent(intent);
         Date now = new Date();
         formattedDate = dateFormat.format(now);
-        hoy = alarmAndBDController.setExpectativas();
-        counterView.setText(String.valueOf(hoy.getConsumo()));
-
-        listFragment = new ListFragment();
-        graphFragment = new GraphFragment();
+        viewModel.setExpectativas();
+        counterView.setText(String.valueOf(viewModel.getConsumo()));
 
         SharedPreferences preferences = getSharedPreferences(ContratoApp.MYPREFS, MODE_PRIVATE);
         boolean savedState = preferences.getBoolean(ContratoApp.SWITCH_STATE, false); // false is the default value if no state is found
         switchNotifications.setChecked(savedState);
         if (intent.getIntExtra(ContratoApp.CANCELAR, 0) == 3) {
             System.out.println("CANCELAR NOTIFICATION AHORA POR FAVOR");
-            alarmAndBDController.closeNotification();
-
+            viewModel.closeNotification();
         }
-
     }
 
     @Override
@@ -183,21 +166,19 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         Date now = new Date();
         formattedDate = dateFormat.format(now);;
-        hoy = alarmAndBDController.setExpectativas();
-        counterView.setText(String.valueOf(hoy.getConsumo()));
-
-        listFragment = new ListFragment();
-        graphFragment = new GraphFragment();
+        viewModel.setExpectativas();
+        counterView.setText(String.valueOf(viewModel.getConsumo()));
 
         SharedPreferences preferences = getSharedPreferences(ContratoApp.MYPREFS, MODE_PRIVATE);
         boolean savedState = preferences.getBoolean(ContratoApp.SWITCH_STATE, false); // false is the default value if no state is found
         switchNotifications.setChecked(savedState);
     }
+
+    //Llamado a la actividad para agregar una meta
     private void newExpectativa(Context context){
         System.out.println(ContratoApp.DATE + " " + formattedDate);
         Intent intent = new Intent(context, NewExpectativaActivity.class);//.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(ContratoApp.DATE, formattedDate);
         startActivity(intent);
     }
-
 }

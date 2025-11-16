@@ -1,6 +1,6 @@
 package com.example.pucho.controladores;
 
-import static com.example.pucho.MainActivity.notificationSwitch;
+import static com.example.pucho.MainActivity.savedState;
 
 import android.content.Context;
 import android.widget.SimpleCursorAdapter;
@@ -30,20 +30,23 @@ public class AlarmAndBDController {
 
     public void setAlarmEvent(int x){
         if(x == 0) {
-            alarmEvent.setNotificationTrigger(0, notificationSwitch);
+            alarmEvent.setNotificationTrigger(0, savedState);
         } else if (x == 1) {
-            alarmEvent.setNotificationTrigger(alarmEvent.setTimeNextPucho(hoy, formattedDate), notificationSwitch);
+            alarmEvent.setNotificationTrigger(alarmEvent.setTimeNextPucho(hoy, formattedDate), savedState);
         }
     }
-    public PuchoDia addPucho(){
-        hoy = bdController.addPuchos(formattedDate);
-        if(hoy.getExpectativa() > hoy.getConsumo() && hoy.getConsumo() > 0){
+    public void addPucho(){
+        bdController.addPuchos(formattedDate);
+        hoy = bdController.getPuchoDia();
+        if(bdController.getPuchoDia().getExpectativa() > bdController.getPuchoDia().getConsumo() && bdController.getPuchoDia().getConsumo() > 0){
             setAlarmEvent(1);
         }
-        return hoy;
     }
 
-    public static SimpleCursorAdapter getAdapter(){
+    public void delete_pucho(long id){
+        bdController.delete_pucho(id);
+    }
+    public static ArrayList<PuchoDia> getAdapter(){
         return bdController.getPuchosAdapter();
     }
 
@@ -51,9 +54,8 @@ public class AlarmAndBDController {
         return hoy;
     }
 
-    public PuchoDia setExpectativas(){
+    public void setExpectativas(){
         hoy = bdController.setExpectativa();
-        return hoy;
     }
     public boolean setNotificationPermission(){
         return alarmEvent.notificationApp.notificationPermission();

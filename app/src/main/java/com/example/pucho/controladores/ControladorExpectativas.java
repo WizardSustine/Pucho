@@ -11,12 +11,10 @@ import java.util.Date;
 import java.util.Locale;
 
 public class ControladorExpectativas {
-    private BDManager bdManager;
+    private static BDManager bdManager;
     private Expectativas expectativas;
-    private Context context;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.getDefault());
     public ControladorExpectativas(Context context){
-        this.context = context;
         bdManager = new BDManager(context);
         expectativas = null;
     }
