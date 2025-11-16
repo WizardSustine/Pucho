@@ -1,9 +1,9 @@
 # <ins>PUCHO</ins>
 La aplicación está escrita en JAVA. Utilizo SQLite con SQLiteOpenHelper. Su diseño es sencillo, apenas 2 actividades, una para ingresar datos, y la principal tiene 2 fragmentos cambiables donde muestro una lista y un gráfico. Cuenta con notificaciones, para las cuales solicita el permiso, y desde la misma notificación se puede seleccionar una acción de agregar un consumo.
 Acá dejo unas capturas:
-![WhatsApp Image 2025-11-15 at 8.41.28 PM.jpeg](../../Downloads/WhatsApp%20Image%202025-11-15%20at%208.41.28%20PM.jpeg)
-![WhatsApp Image 2025-11-15 at 8.41.27 PM.jpeg](../../Downloads/WhatsApp%20Image%202025-11-15%20at%208.41.27%20PM.jpeg)
-![WhatsApp Image 2025-11-15 at 8.41.26 PM.jpeg](../../Downloads/WhatsApp%20Image%202025-11-15%20at%208.41.26%20PM.jpeg)
+![WhatsApp Image 2025-11-15 at 8 41 26 PM](https://github.com/user-attachments/assets/bea6910f-21d6-44ef-8591-e8124508d5ce)
+![WhatsApp Image 2025-11-15 at 8 41 27 PM](https://github.com/user-attachments/assets/ea6a7912-b273-4328-96a8-049c1dcc46af)
+![WhatsApp Image 2025-11-15 at 8 41 28 PM](https://github.com/user-attachments/assets/e1b3bed6-1e9f-4d78-9753-3002062e40a6)
 
 Hice esta aplicación para llevar una cuenta de los cigarrillos que consumo y que me asista en el proceso de dejarlo o al menos reducir el consumo. Se puede optar por establecer una meta diaria, y se puede activar notificaciones. La aplicación toma la hora del último cigarrillo consumido y calcula el tiempo que debe transcurrir para el próximo consumo de acuerdo con la meta establecida. En base a ello envía una única notificación. Si se realiza otro consumo, entonces habrá una nueva notificación en el momento pertinente.
 En mi experiencia, puedo decir que consumía alrededor de 20 diarios y reduciendo mensualmente de a 2, logré buenos resultados. Por lo que recomiendo ese mismo plan. 
