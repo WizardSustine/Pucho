@@ -34,7 +34,7 @@ public class AlarmEvent {
         alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, TimeChangeReceiver.class);
         intent.putExtra(TRIGGER_NOTIFICATION,NOTIFICATION_ID);
-        pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent = PendingIntent.getBroadcast(context, 0, intent,  PendingIntent.FLAG_UPDATE_CURRENT);
         notificationApp.createNotificationChannel();
     }
     public long setTimeNextPucho(PuchoDia hoy, String formattedDate) {
@@ -69,7 +69,7 @@ public class AlarmEvent {
             SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
             //alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
             alarmManager.cancel(pendingIntent);
-            alarmManager.set(AlarmManager.RTC, millis, pendingIntent);
+            alarmManager.set(AlarmManager.RTC, /*millis*/5, pendingIntent);
             System.out.println("Alarm is set");
 
             System.out.println(timeFormat.format(millis));

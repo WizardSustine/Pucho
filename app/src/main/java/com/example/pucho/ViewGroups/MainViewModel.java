@@ -13,9 +13,16 @@ import com.example.pucho.controladores.AlarmAndBDController;
 
 import java.util.ArrayList;
 
+/** ViewModel principal que gestiona la lógica de negocio y los datos para la UI.
+ * Mantiene la comunicación entre la UI y el controlador de datos (AlarmAndBDController).*/
 public class MainViewModel extends AndroidViewModel {
+    // El controlador para la base de datos y las alarmas.
     private static AlarmAndBDController alarmAndBDController;
+
+    // LiveData para la lista de días a mostrar en la vista principal (ListView/RecyclerView).
     private static MutableLiveData<ArrayList<PuchoDia>> model = new MutableLiveData<>();
+
+    // LiveData para los datos del gráfico (últimos 30 días).
     private static MutableLiveData<ArrayList<PuchoDia>> graphModel = new MutableLiveData<>();
     public LiveData<ArrayList<PuchoDia>> getModel(){
         return model;
@@ -24,6 +31,7 @@ public class MainViewModel extends AndroidViewModel {
     public MainViewModel(Application application) {
         super(application);
 
+        // Inicializa el controlador al crear el ViewModel.
         alarmAndBDController = new AlarmAndBDController(getApplication().getApplicationContext());
         setModel();
         setGraphModel();
