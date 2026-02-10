@@ -31,3 +31,7 @@ El proyecto sigue una arquitectura moderna de Android basada en los componentes 
     *   `ViewModel`: Para gestionar los datos de la UI de forma consciente del ciclo de vida.
     *   `LiveData`: Para notificar a la UI sobre cambios en los datos de forma reactiva.
 *   **Otras dependencias estándar de AndroidX.**
+
+## Para ver más documentación
+* **Arquitectura** --> [ARCHITECTURE.md](https://github.com/WizardSustine/Pucho/edit/master/app/docs/ARCHITECTURE.md)
+* **Diseño** --> [DESIGN.md](https://github.com/WizardSustine/Pucho/blob/master/app/docs/DESIGN.md)
