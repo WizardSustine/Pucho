@@ -29,8 +29,7 @@ La arquitectura se divide en tres capas principales:
 
 A continuación se muestra un diagrama que ilustra el flujo de datos y las dependencias entre los componentes.
 
-
-
+![architecture blueprint is not loaded](https://raw.githubusercontent.com/WizardSustine/Pucho/refs/heads/master/app/images/Architecture.png)
 
 
 
